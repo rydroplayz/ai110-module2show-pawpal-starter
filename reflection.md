@@ -4,12 +4,11 @@
 
 **a. Initial design**
 
-I designed four classes: Task, Pet, Owner, and Scheduler. Task holds the data for a single care activity (time, date, duration, priority, frequency, completion status). Pet owns a list of Tasks and can add/list/count them. Owner owns a list of Pets and also holds available_minutes_per_day, which represents the time constraint the scenario asks the scheduler to respect. Scheduler doesn't hold any task data itself — it reads from Owner and produces sorted, filtered, or conflict-checked views across all of the owner's pets, and builds a daily plan that fits within the owner's available time.
+I designed four classes: Task, Pet, Owner, and Scheduler. Task holds the data for a single care activity (time, date, duration, priority, frequency, completion status). Pet owns a list of Tasks and can add/list/count them. Owner owns a list of Pets and also holds available_minutes_per_day, which represents the time constraint the scenario asks the scheduler to respect. Scheduler doesn't hold any task data itself, it reads from Owner and produces sorted, filtered, or conflict-checked views across all of the owner's pets, and builds a daily plan that fits within the owner's available time.
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+My design changed once, before I finalized the implementation: I originally planned Scheduler to just support basic sorting and filtering, but going through the rubric against my draft class list showed I was leaving stretch-credit features unclaimed. I added next_available_slot(), save_to_json(), and load_from_json() to Scheduler, and available_minutes_per_day to Owner, before writing the UML so the diagram would still match the final code.
 
 ---
 
@@ -17,13 +16,11 @@ I designed four classes: Task, Pet, Owner, and Scheduler. Task holds the data fo
 
 **a. Constraints and priorities**
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+The scheduler considers two constraints: task priority (high/medium/low) and the owner's available time budget for the day. Time budget mattered most to me because it's what makes build_daily_plan() actually have to make tradeoffs, without a limited budget, every task would just get included and there'd be no real "reasoning" happening, which is specifically what the project scenario asked for.
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+My build_daily_plan() explains its include/skip decisions with a simple text reason (priority level and minutes remaining), not a deeper analysis of tradeoffs between tasks. This keeps the logic easy to follow, but it means the "explanation" is fairly shallow, it doesn't account for things like how urgent a skipped task is or whether skipping it has consequences for the pet's routine.
 
 ---
 
@@ -31,13 +28,11 @@ I designed four classes: Task, Pet, Owner, and Scheduler. Task holds the data fo
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I used AI in the project as a step-by-step build partner rather than a one-shot code generator. I had it walk me through each phase in order: UML design, class stubs, then filling in the Scheduler methods one at a time, then the demo script, then tests.
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+While building main.py, I was given a draft that referenced scheduler.mark_task_complete(), but that method was never actually part of my Scheduler class design or UML. I caught the mismatch before running it and had it corrected to just call task.mark_complete() directly, which is what my actual class supports.
 
 ---
 
@@ -45,13 +40,11 @@ I designed four classes: Task, Pet, Owner, and Scheduler. Task holds the data fo
 
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
+I  tested: whether marking a task complete actually flips its status, whether adding a task increases a pet's task count, whether sorting by time returns tasks in chronological order, whether the conflict detector correctly flags two tasks scheduled at the same time across different pets, whether filtering by pet and completion status returns the right subset, and whether the daily plan correctly excludes a task once the time budget runs out. These matter because they're the exact behaviors the rubric and scenario call out, if any of these broke, the "smart" part of the scheduler wouldn't actually be smart.
 
 **b. Confidence**
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
+I'm confident in the scheduler's correctness, all 6 tests pass and they cover the core behaviors (completion, counting, sorting, conflicts, filtering, budget-based planning). If I had more time, I'd want to test edge cases like a pet with zero tasks, two tasks with identical priority and time, and a task whose duration is larger than the entire daily budget.
 
 ---
 
@@ -59,12 +52,12 @@ I designed four classes: Task, Pet, Owner, and Scheduler. Task holds the data fo
 
 **a. What went well**
 
-- What part of this project are you most satisfied with?
+I'm most satisfied with the daily plan reasoning logic (build_daily_plan()). It's the piece that actually fulfills the scenario's request to not just generate a schedule but explain why each task was included or skipped, and seeing it correctly skip a task once the time budget ran out in the demo output felt like the system was doing something genuinely useful, not just sorting a list.
 
 **b. What you would improve**
 
-- If you had another iteration, what would you improve or redesign?
+If I had another iteration, I'd add recurring task support (daily/weekly tasks that automatically reschedule themselves once completed), my current design treats every task as a one-off, which doesn't fully match how real pet care routines repeat.
 
 **c. Key takeaway**
 
-- What is one important thing you learned about designing systems or working with AI on this project?
+The biggest thing I learned was to double-check AI output against my own requirements instead of just trusting it, I caught a rubric mismatch before finalizing my UML, and a real bug (a method that didn't exist in my classes) before it caused an error. AI moved fast, but correctness was still my job.
