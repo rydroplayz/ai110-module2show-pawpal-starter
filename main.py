@@ -44,7 +44,7 @@ for entry in plan:
 
 print("\n=== Completing the dog's morning walk ===")
 walk = dog.tasks[0]
-walk.mark_complete()
+scheduler.complete_task(walk)
 print(f"Marked complete: {walk.description} on {walk.date}")
 
 print("\n=== Filtering: pending tasks for Milo ===")

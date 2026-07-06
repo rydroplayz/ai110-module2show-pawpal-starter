@@ -17,6 +17,24 @@ class Task:
 
     def mark_complete(self):
         self.completed = True
+        if self.frequency == "once":
+            return None
+        current_date = datetime.strptime(self.date, "%Y-%m-%d")
+        if self.frequency == "daily":
+            next_date = current_date + timedelta(days=1)
+        elif self.frequency == "weekly":
+            next_date = current_date + timedelta(weeks=1)
+        else:
+            return None
+        return Task(
+            description=self.description,
+            time=self.time,
+            date=next_date.strftime("%Y-%m-%d"),
+            duration_minutes=self.duration_minutes,
+            priority=self.priority,
+            frequency=self.frequency,
+            pet_name=self.pet_name,
+        )
 
 
 @dataclass
@@ -92,6 +110,14 @@ class Scheduler:
             else:
                 seen[key] = task
         return conflicts
+    
+    def complete_task(self, task):
+        next_task = task.mark_complete()
+        if next_task is not None:
+            pet = self.owner.get_pet(task.pet_name)
+            if pet is not None:
+                pet.add_task(next_task)
+        return next_task
 
     def build_daily_plan(self, date=None):
         if date is None:

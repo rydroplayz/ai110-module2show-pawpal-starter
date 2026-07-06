@@ -28,12 +28,12 @@
 
 | | Option A | Option B |
 |-|----------|----------|
-| **Model / tool used** | | |
-| **Prompt** | | |
-| **Response summary** | | |
-| **What was useful** | | |
-| **Problems noticed** | | |
-| **Decision** | | |
+| **Model / tool used** | ChatGPT | Claude |
+| **Prompt** | "How should recurring weekly tasks reschedule themselves?" (with class context) | Same prompt, same context |
+| **Response summary** | Recommended creating a new Task via `next_occurrence()`, called separately from a `complete_task()` method | Recommended the same core idea, but folded next-occurrence logic directly into `mark_complete()`, returning the new task |
+| **What was useful** | Clear explanation of Option 1 vs Option 2 tradeoffs (new task vs. mutating date), good SRP reasoning | Reused my existing `mark_complete()` name instead of introducing a new one; flagged a real edge case (day-of-week drift on late completions) I hadn't considered |
+| **Problems noticed** | Introduced a new method name (`next_occurrence`) that didn't match anything already in my code | Needed adapting to use `datetime.strptime` instead of `date.fromisoformat` to match my existing imports |
+| **Decision** | — | Used Claude's approach, since it fit my existing method names and codebase with less restructuring |
 
 **Which approach did you use in your final implementation and why?**
 
