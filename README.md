@@ -44,14 +44,35 @@ pip install -r requirements.txt
 
 ## 🖥️ Sample Output
 
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
-
 ```
-# e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
+$ python main.py
+=== Today's Schedule (sorted by time) ===
+2026-07-06 07:30 | Milo   | Feed breakfast       | pending
+2026-07-06 08:00 | Rex    | Morning walk         | pending
+2026-07-06 08:00 | Milo   | Vet appointment      | pending
+2026-07-06 19:00 | Rex    | Give medication      | pending
+
+=== Conflict Check ===
+WARNING: 'Morning walk' (Rex) and 'Vet appointment' (Milo) both scheduled at 08:00 on 2026-07-06
+
+=== Daily Plan (budget: 90 min) ===
+[INCLUDED] 08:00 | Rex    | Morning walk         | included: high priority, fit within 90 min remaining
+[INCLUDED] 08:00 | Milo   | Vet appointment      | included: high priority, fit within 60 min remaining
+[INCLUDED] 19:00 | Rex    | Give medication      | included: high priority, fit within 15 min remaining
+[SKIPPED ] 07:30 | Milo   | Feed breakfast       | skipped: only 5 min left, task needs 15 min
+
+=== Completing the dog's morning walk ===
+Marked complete: Morning walk on 2026-07-06
+
+=== Filtering: pending tasks for Milo ===
+07:30 | Feed breakfast
+08:00 | Vet appointment
+
+=== Next available 30-minute slot on 2026-07-06 ===
+Next open slot: 07:00
+
+=== Saving data to data.json ===
+Saved.
 ```
 
 ## 🧪 Testing PawPal+
@@ -72,18 +93,15 @@ Sample test output:
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | `Scheduler.sort_by_time()`, `Scheduler.sort_by_priority()` | Sort chronologically or by priority level |
+| Filtering | `Scheduler.filter_tasks()` | Filter by pet name and/or completion status |
+| Conflict handling | `Scheduler.detect_conflicts()` | Flags tasks scheduled at the same date/time |
+| Daily plan with reasoning | `Scheduler.build_daily_plan()` | Orders tasks by priority, fits them to the owner's time budget, explains each include/skip decision |
+| Next available slot | `Scheduler.next_available_slot()` | Finds the next open time gap long enough for a new task |
 
 ## 📸 Demo Walkthrough
-
-Describe your app in numbered steps so a reader can follow along without watching a video:
 
 1. <!-- Describe this step -->
 2. <!-- Describe this step -->
