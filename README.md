@@ -85,10 +85,24 @@ pytest
 pytest --cov
 ```
 
+These tests cover: task completion, pet task counting, chronological sorting, conflict detection across pets, filtering by pet and status, and whether the daily plan correctly respects the owner's time budget.
+
 Sample test output:
 
 ```
-# Paste your pytest output here
+$ python -m pytest -v
+=================== test session starts ====================
+platform win32 -- Python 3.14.5, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\Windows\ai110-module2show-pawpal-starter
+plugins: anyio-4.14.0
+collected 6 items
+tests/test_pawpal.py::test_task_completion PASSED     [ 16%]
+tests/test_pawpal.py::test_adding_task_increases_pet_task_count PASSED [ 33%]
+tests/test_pawpal.py::test_sort_by_time_is_chronological PASSED [ 50%]
+tests/test_pawpal.py::test_conflict_detection_flags_same_time_tasks PASSED [ 66%]
+tests/test_pawpal.py::test_filter_by_pet_and_completion_status PASSED [ 83%]
+tests/test_pawpal.py::test_build_daily_plan_respects_time_budget PASSED [100%]
+==================== 6 passed in 0.12s =====================
 ```
 
 ## 📐 Smarter Scheduling
