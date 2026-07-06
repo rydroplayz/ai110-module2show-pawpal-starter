@@ -4,8 +4,7 @@
 
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+I designed four classes: Task, Pet, Owner, and Scheduler. Task holds the data for a single care activity (time, date, duration, priority, frequency, completion status). Pet owns a list of Tasks and can add/list/count them. Owner owns a list of Pets and also holds available_minutes_per_day, which represents the time constraint the scenario asks the scheduler to respect. Scheduler doesn't hold any task data itself — it reads from Owner and produces sorted, filtered, or conflict-checked views across all of the owner's pets, and builds a daily plan that fits within the owner's available time.
 
 **b. Design changes**
 
