@@ -114,6 +114,23 @@ tests/test_pawpal.py::test_build_daily_plan_respects_time_budget PASSED [100%]
 | Conflict handling | `Scheduler.detect_conflicts()` | Flags tasks scheduled at the same date/time |
 | Daily plan with reasoning | `Scheduler.build_daily_plan()` | Orders tasks by priority, fits them to the owner's time budget, explains each include/skip decision |
 | Next available slot | `Scheduler.next_available_slot()` | Finds the next open time gap long enough for a new task |
+| Recurring tasks | `Task.mark_complete()`, `Scheduler.complete_task()` | Daily/weekly tasks automatically create their next occurrence when completed, while the original stays as completed history |
+
+## Data Persistence
+
+PawPal+ can save and reload an owner's full pet/task data using JSON.
+
+- `Scheduler.save_to_json(filepath)` — serializes the current Owner (name, time budget), all Pets, and all their Tasks into a JSON file.
+- `Scheduler.load_from_json(filepath)` — reads that JSON file back and rebuilds real `Owner`, `Pet`, and `Task` objects from it, replacing the scheduler's current owner.
+
+Files modified: `pawpal_system.py` (added both methods to the `Scheduler` class), `main.py` (calls `save_to_json("data.json")` at the end of the demo run), `.gitignore` (added `data.json` since it's generated output, not source).
+
+Example:
+```python
+scheduler.save_to_json("data.json")
+# ... later, in a new session:
+scheduler.load_from_json("data.json")
+```
 
 ## 📸 Demo Walkthrough
 

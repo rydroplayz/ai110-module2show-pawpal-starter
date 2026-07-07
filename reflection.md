@@ -56,8 +56,7 @@ I'm most satisfied with the daily plan reasoning logic (build_daily_plan()). It'
 
 **b. What you would improve**
 
-If I had another iteration, I'd add recurring task support (daily/weekly tasks that automatically reschedule themselves once completed), my current design treats every task as a one-off, which doesn't fully match how real pet care routines repeat.
-
+Recurring tasks currently always schedule their next occurrence exactly 7 days (or 1 day for daily tasks) after the original due date, even if the task was actually completed late. If I had another iteration, I'd change this so a weekly task completed several days late doesn't quietly drift away from its usual day-of-week over time, for example, basing the next date on the completion date when it's late, rather than always adding a fixed interval to the original date.
 **c. Key takeaway**
 
 The biggest thing I learned was to double-check AI output against my own requirements instead of just trusting it, I caught a rubric mismatch before finalizing my UML, and a real bug (a method that didn't exist in my classes) before it caused an error. AI moved fast, but correctness was still my job.

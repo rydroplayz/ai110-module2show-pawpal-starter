@@ -72,3 +72,27 @@ def test_build_daily_plan_respects_time_budget():
     included = [entry for entry in plan if entry["included"]]
     assert len(included) == 1
     assert included[0]["task"].description == "Walk"
+
+def test_completing_weekly_task_creates_next_occurrence():
+    owner, dog, cat = make_owner()
+    task = Task(description="Walk", time="08:00", date="2026-07-06",
+                duration_minutes=30, frequency="weekly")
+    dog.add_task(task)
+    scheduler = Scheduler(owner)
+    next_task = scheduler.complete_task(task)
+    assert task.completed is True
+    assert next_task is not None
+    assert next_task.date == "2026-07-13"
+    assert next_task in dog.tasks
+
+
+def test_completing_once_task_does_not_duplicate():
+    owner, dog, cat = make_owner()
+    task = Task(description="Vet", time="09:00", date="2026-07-06",
+                duration_minutes=20, frequency="once")
+    dog.add_task(task)
+    scheduler = Scheduler(owner)
+    before_count = dog.task_count()
+    result = scheduler.complete_task(task)
+    assert result is None
+    assert dog.task_count() == before_count
