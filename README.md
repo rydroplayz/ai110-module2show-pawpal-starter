@@ -85,7 +85,7 @@ pytest
 pytest --cov
 ```
 
-These tests cover: task completion, pet task counting, chronological sorting, conflict detection across pets, filtering by pet and status, and whether the daily plan correctly respects the owner's time budget.
+These tests cover: task completion, pet task counting, chronological sorting, conflict detection across pets, filtering by pet and status, whether the daily plan correctly respects the owner's time budget, and whether completing a recurring task creates the correct next occurrence (while a one-off task does not duplicate).
 
 Sample test output:
 
@@ -95,14 +95,16 @@ $ python -m pytest -v
 platform win32 -- Python 3.14.5, pytest-9.1.1, pluggy-1.6.0
 rootdir: C:\Users\Windows\ai110-module2show-pawpal-starter
 plugins: anyio-4.14.0
-collected 6 items
-tests/test_pawpal.py::test_task_completion PASSED     [ 16%]
-tests/test_pawpal.py::test_adding_task_increases_pet_task_count PASSED [ 33%]
-tests/test_pawpal.py::test_sort_by_time_is_chronological PASSED [ 50%]
-tests/test_pawpal.py::test_conflict_detection_flags_same_time_tasks PASSED [ 66%]
-tests/test_pawpal.py::test_filter_by_pet_and_completion_status PASSED [ 83%]
-tests/test_pawpal.py::test_build_daily_plan_respects_time_budget PASSED [100%]
-==================== 6 passed in 0.12s =====================
+collected 8 items
+tests/test_pawpal.py::test_task_completion PASSED     [ 12%]
+tests/test_pawpal.py::test_adding_task_increases_pet_task_count PASSED [ 25%]
+tests/test_pawpal.py::test_sort_by_time_is_chronological PASSED [ 37%]
+tests/test_pawpal.py::test_conflict_detection_flags_same_time_tasks PASSED [ 50%]
+tests/test_pawpal.py::test_filter_by_pet_and_completion_status PASSED [ 62%]
+tests/test_pawpal.py::test_build_daily_plan_respects_time_budget PASSED [ 75%]
+tests/test_pawpal.py::test_completing_weekly_task_creates_next_occurrence PASSED [ 87%]
+tests/test_pawpal.py::test_completing_once_task_does_not_duplicate PASSED [100%]
+==================== 8 passed in 0.11s =====================
 ```
 
 ## 📐 Smarter Scheduling
