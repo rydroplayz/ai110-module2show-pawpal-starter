@@ -44,7 +44,9 @@ I  tested: whether marking a task complete actually flips its status, whether ad
 
 **b. Confidence**
 
-I'm confident in the scheduler's correctness, all 6 tests pass and they cover the core behaviors (completion, counting, sorting, conflicts, filtering, budget-based planning). If I had more time, I'd want to test edge cases like a pet with zero tasks, two tasks with identical priority and time, and a task whose duration is larger than the entire daily budget.
+**b. Confidence**
+
+I'm confident in the scheduler's correctness, all 8 tests pass and they cover the core behaviors (completion, counting, sorting, conflicts, filtering, budget-based planning, and recurring task rescheduling). If I had more time, I'd want to test edge cases like a pet with zero tasks, two tasks with identical priority and time, and a task whose duration is larger than the entire daily budget.
 
 ---
 
@@ -57,6 +59,7 @@ I'm most satisfied with the daily plan reasoning logic (build_daily_plan()). It'
 **b. What you would improve**
 
 Recurring tasks currently always schedule their next occurrence exactly 7 days (or 1 day for daily tasks) after the original due date, even if the task was actually completed late. If I had another iteration, I'd change this so a weekly task completed several days late doesn't quietly drift away from its usual day-of-week over time, for example, basing the next date on the completion date when it's late, rather than always adding a fixed interval to the original date.
+
 **c. Key takeaway**
 
 The biggest thing I learned was to double-check AI output against my own requirements instead of just trusting it, I caught a rubric mismatch before finalizing my UML, and a real bug (a method that didn't exist in my classes) before it caused an error. AI moved fast, but correctness was still my job.

@@ -44,8 +44,10 @@ for entry in plan:
 
 print("\n=== Completing the dog's morning walk ===")
 walk = dog.tasks[0]
-scheduler.complete_task(walk)
+next_task = scheduler.complete_task(walk)
 print(f"Marked complete: {walk.description} on {walk.date}")
+if next_task is not None:
+    print(f"Next occurrence auto-scheduled: {next_task.description} on {next_task.date}")
 
 print("\n=== Filtering: pending tasks for Milo ===")
 for task in scheduler.filter_tasks(pet_name="Milo", completed=False):

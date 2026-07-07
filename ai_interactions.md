@@ -10,15 +10,15 @@
 
 **What task did you give the agent?**
 
-<!-- Describe the goal you asked the agent to accomplish -->
+After adding recurring-task support to the Scheduler, I asked the agent to audit my entire repo against the grading rubric and fix any resulting inconsistencies across multiple files at once, rather than one file at a time.
 
 **What did the agent do?**
 
-<!-- List the steps the agent took (files edited, commands run, etc.) -->
+It reviewed `pawpal_system.py`, `diagrams/uml.mmd`, `reflection.md`, `README.md`, and `tests/test_pawpal.py` together, and found that: the UML diagram was missing the new `complete_task()` method, my reflection still said I "would add" recurring tasks even though I'd already built it, the README's feature table and test-coverage summary didn't mention recurring tasks, and there were no tests covering the new feature at all. It then edited all four non-code files in one coordinated pass and wrote two new pytest tests for the recurring-task behavior.
 
 **What did you have to verify or fix manually?**
 
-<!-- Describe anything the agent got wrong or that required human review -->
+I ran the full test suite myself afterward to confirm all 8 tests actually passed, rather than trusting that they would. I also personally reworded the reflection text the agent drafted, since it initially described my past design decisions in a way I didn't think sounded like me, and I asked for it to focus only on the concrete "late completion" limitation instead.
 
 ---
 
@@ -37,4 +37,4 @@
 
 **Which approach did you use in your final implementation and why?**
 
-<!-- Your conclusion -->
+I used Claude's version because it extended my existing `mark_complete()` method instead of requiring a new method name, so it needed fewer changes to `main.py` and `app.py`. Both tools agreed on the core design (create a new task rather than mutate the old one, to preserve history), which gave me confidence the approach was sound.

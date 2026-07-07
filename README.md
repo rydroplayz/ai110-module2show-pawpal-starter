@@ -63,6 +63,7 @@ WARNING: 'Morning walk' (Rex) and 'Vet appointment' (Milo) both scheduled at 08:
 
 === Completing the dog's morning walk ===
 Marked complete: Morning walk on 2026-07-06
+Next occurrence auto-scheduled: Morning walk on 2026-07-07
 
 === Filtering: pending tasks for Milo ===
 07:30 | Feed breakfast
@@ -136,10 +137,11 @@ scheduler.load_from_json("data.json")
 
 ## 📸 Demo Walkthrough
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Open the app with `streamlit run app.py`. The "Owner settings" panel lets you set the owner's name and their available minutes per day, which controls how much the daily plan can fit.
+2. Under "Add a Pet," enter a pet's name and species, then click **Add pet**. Once at least one pet exists, the "Add a Task" section appears.
+3. Fill in a task's title, duration, priority, date, time, and frequency (once/daily/weekly), then click **Add task**. The task immediately shows up in the "All Tasks" table below, color-coded by priority (🔴 high, 🟡 medium, 🟢 low) with a status icon (✅ done or ⏳ pending).
+4. If two tasks land on the same pet or different pets at the same date and time, the "Conflicts" section flags them with a warning message.
+5. Pick a date under "Build Daily Plan" and click **Generate schedule**. The scheduler orders tasks by priority, fits as many as possible into the owner's time budget, and shows a green success block for each included task (with its reasoning) and a yellow warning block for anything skipped due to lack of time.
+6. Under "Save / Load," click **Save to data.json** to persist the current owner, pets, and tasks to a JSON file, or **Load from data.json** to restore a previously saved session — useful for continuing where you left off after closing the app.
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
